@@ -175,7 +175,7 @@ def main():
     tgtres = options["resolution"]
     title = options["title"]
     if flags["e"] and not output:
-        output = "rimport_tmp"  # will be removed with the entire tmp location
+        output = gs.append_node_pid("rimport_tmp")  # will be removed with the entire tmp location
         TMP_EST_FILE = output
     if options["resolution_value"]:
         if tgtres != "value":
@@ -220,7 +220,7 @@ def main():
                     gs.message(_("Calculating estimated resolution..."))
                     raster_info = gs.raster_info(output)
                     if raster_info:
-                        estres = (raster_info["ewres"] + raster_info["nsres"]) / 2.0
+                        estres = math.sqrt(raster_info["nsres"] * raster_info["ewres"])
                         gs.message(
                             _(
                                 "Estimated target resolution for input band <{out}>: {res}"
